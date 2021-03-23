@@ -588,6 +588,7 @@ class PluginsManager(PaymentInterface):
     def list_payment_gateways(
         self,
         currency: Optional[str] = None,
+        checkout: Optional["Checkout"] = None,
         active_only: bool = True,
     ) -> List["PaymentGateway"]:
         payment_plugins = self.list_payment_plugin(active_only=active_only)
@@ -596,7 +597,7 @@ class PluginsManager(PaymentInterface):
         for plugin in payment_plugins.values():
             gateways.extend(
                 plugin.get_payment_gateways(
-                    currency=currency, checkout=None, previous_value=None
+                    currency=currency, checkout=checkout, previous_value=None
                 )
             )
         return gateways
